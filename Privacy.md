@@ -94,7 +94,7 @@ target = web3.eth.contract(address=target_address,abi=abi)
 
 #do stuff
 print(target.getStorageAt(target_address,5))
-#we then convert our output to the required type for our unlock() function. i.e bytes 16.i just used an online converter :p
+#we then convert our output to the required type for our unlock() function. i.e bytes 16.
 key = 0x37bf84...
 target.functions.unlock(key).call()
 ```
