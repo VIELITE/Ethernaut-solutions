@@ -1,8 +1,8 @@
-#Privacy
+# Privacy
 
 first we are presented with a nice description and a "might help" as well:
 
-`The creator of this contract was careful enough to protect the sensitive areas of its storage.
+```The creator of this contract was careful enough to protect the sensitive areas of its storage.
 
 Unlock this contract to beat the level.
 
@@ -10,7 +10,8 @@ Things that might help:
 
 Understanding how storage works
 Understanding how parameter parsing works
-Understanding how casting works`
+Understanding how casting works
+```
 
 And then code:
 
@@ -49,11 +50,13 @@ contract Privacy {
 }
 ```
 Looking at the code we discover this eye catching function :
-``solidity
+
+```solidity
  function unlock(bytes16 _key) public {
     require(_key == bytes16(data[2]));
     locked = false;
-  }``
+  }
+  ```
   
   it requires that we pass a "_key" value that matches whatever value is present at the second item in an array named "data".
   
